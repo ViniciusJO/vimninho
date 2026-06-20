@@ -108,6 +108,10 @@ function vim.utils.do_in_other_buffer(bufnr, fn, report)
 end
 
 
+---Hints a intermediary keymap prefix
+---@param prefix string Prefix of the mapping.
+---@param hint string Hint
+---@diagnostic disable-next-line: duplicate-set-field
 ---@diagnostic disable-next-line: duplicate-set-field
 function vim.keymap.hint(prefix, hint)
   vim.keymap.set("*", prefix, "<Nop>", { desc = hint })

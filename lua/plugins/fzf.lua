@@ -20,7 +20,7 @@ return {
           ["default"] = function(selected, opts)
             fzf_actions.colorscheme(selected, opts)
             local theme_name = selected[1]
-            vim.utils.run_cmd_capture('!echo \'vim.cmd.colorscheme(\"' .. theme_name .. '\")\' >> ' .. vim.g.runtimepath .. '/colorscheme.lua')
+            vim.utils.run_cmd_capture('!echo \'vim.cmd.colorscheme(\"' .. theme_name .. '\")\' >> ' .. vim.g.runtimepath .. '/lua/colorscheme.lua')
           end
         }
       })

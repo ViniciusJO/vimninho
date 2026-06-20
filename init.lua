@@ -4,7 +4,6 @@
 
 vim.opt.termguicolors = true
 vim.cmd.colorscheme("unokai")
--- :lua print('vim.cmd.colorscheme("'..vim.g.colors_name..'")')
 
 require("utils")
 require("options")
@@ -20,14 +19,14 @@ statusline.setup()
 statusline.enable()
 
 local cmbed = require("combed")
-vim.keymap.set({ 'n' }, '<M-X>', cmbed.executeCommandInBuffer(false), { desc = 'Execute command in place' })
-vim.keymap.set({ 'n' }, '<M-x>', cmbed.executeCommandInBuffer(true), { desc = 'Execute command in place and replace' })
+vim.keymap.set({ 'n' }, '<M-X>', cmbed.executeCommandInBuffer(false), { desc = 'Execute command in place', noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<M-x>', cmbed.executeCommandInBuffer(true), { desc = 'Execute command in place and replace', noremap = true, silent = true })
 
 local c_utils = require("c_utils")
 vim.api.nvim_create_user_command('CHeaderThing', c_utils.generate_c_header_only_preprocs, { desc = 'Generate C header guard machinery' })
 vim.api.nvim_create_user_command('PreprocessC', c_utils.preprocessCFile, { desc = 'Preprocess C File' })
-vim.keymap.set({ 'n' }, '<leader>lh', c_utils.generate_c_header_only_preprocs, { desc = 'Generate C header guard machinery' })
-vim.keymap.set({ 'n' }, '<leader>lp', c_utils.preprocessCFile, { desc = 'Preprocess C File' })
+vim.keymap.set({ 'n' }, '<leader>lh', c_utils.generate_c_header_only_preprocs, { desc = 'Generate C header guard machinery', noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<leader>lp', c_utils.preprocessCFile, { desc = 'Preprocess C File', noremap = true, silent = true })
 
 local function set_transparent() -- set UI component to transparent
   local groups = {

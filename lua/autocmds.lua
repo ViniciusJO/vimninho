@@ -34,13 +34,26 @@ vim.api.nvim_create_autocmd("WinEnter", {
   end,
 })
 
+---Returns ***true*** if `value` matches with any of the strings in `tbl`
+---@param tbl table<string>
+---@param value string
+---@return boolean
+function vim.utils.tbl_match_any_str(tbl, value)
+  for _, v in ipairs(tbl) do
+    if value:match(v) then return true end
+  end
+  return false
+end
+
+
 vim.g.non_free_standing_filetypes = { "compilation", "fyler" }
+
 vim.api.nvim_create_autocmd("WinClosed", {
   callback = function()
     vim.schedule(function()
       local ft = vim.bo.filetype
       local function not_nfsf(filetype)
-        return not vim.tbl_contains(vim.g.non_free_standing_filetypes, filetype)
+        return not vim.utils.tbl_match_any_str(vim.g.non_free_standing_filetypes, filetype)
       end
       if not_nfsf(ft) then return end
 
@@ -53,7 +66,7 @@ vim.api.nvim_create_autocmd("WinClosed", {
 
 
       if count ~= 0 then return end
-      if ft == "fyler" then
+      if ft:match("fyler") then
         for _, win in ipairs(vim.api.nvim_list_wins()) do
           local cfg = vim.api.nvim_win_get_config(win)
           local win_buf = vim.api.nvim_win_get_buf(win)
