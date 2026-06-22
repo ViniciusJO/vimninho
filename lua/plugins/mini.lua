@@ -15,7 +15,7 @@ return {
     vim.keymap.set("n", "<leader>bd", function() bremove.delete(0,false) end, { desc = "Buf delete", noremap = true })
     -- vim.keymap.set("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Buf delete", noremap = true })
 
-    require("mini.notify").setup()
+    require("mini.notify").setup({ lsp_progress = { enable = false, }, })
     require("mini.icons").setup()
     require("mini.surround").setup()
     require("mini.align").setup({ mappings = { start = '<leader>+', start_with_preview = '<leader>=' } })

@@ -114,7 +114,7 @@ end
 ---@diagnostic disable-next-line: duplicate-set-field
 ---@diagnostic disable-next-line: duplicate-set-field
 function vim.keymap.hint(prefix, hint)
-  vim.keymap.set("*", prefix, "<Nop>", { desc = hint })
+  vim.keymap.set("n", prefix, "<Nop>", { desc = hint })
 end
 
 

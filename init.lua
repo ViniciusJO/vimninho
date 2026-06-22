@@ -75,7 +75,6 @@ local plugins = {
   require("plugins.undotree"),
   require("plugins.ufo"),
   require("plugins.aerial"),
-  require("plugins.fyler"),
   require("plugins.compile-mode"),
   require("plugins.gitsigns"),
 
@@ -86,11 +85,14 @@ local plugins = {
   require("plugins.neogit"),
 
   require("plugins.hover"),
+  require("plugins.fidget"),
 
   require("plugins.cmp"),
   require("plugins.dap"),
   require("plugins.treesitter"),
   require("plugins.lsp"),
+
+  require("plugins.fyler"),
 }
 
 vim.pack.packit(plugins)
@@ -115,5 +117,19 @@ vim.keymap.hint("<leader>l/", "Twoslash Queries")
 vim.keymap.hint("<leader>ls", "Split horizontaly and...")
 vim.keymap.hint("<leader>lv", "Split verticaly and...")
 
+vim.keymap.hint("<leader>d", "Debugger")
+
 -- vim.keymap.set({'n', 'i'}, '<c-j>', function() vim.cmd("Inspect") end, {})
+
+
+
+
+
+-- (
+--    fenced_code_block
+--    (info_string (language)) @lang
+--    (code_fence_content) @injection.content
+--    (#set! injection.language "glsl")
+-- )
+
 

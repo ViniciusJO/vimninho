@@ -137,7 +137,6 @@ return {
       vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: Toggle UI' })
       -- vim.keymap.set('n', '<F7>', dapview.toggle, { desc = 'Debug: Toggle UI' })
 
-      require('which-key').add({ { '<leader>d', desc = 'Debugger', noremap = true } })
       vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
       vim.keymap.set('n', '<leader>dB', function()
         dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')

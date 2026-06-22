@@ -31,6 +31,8 @@ function M.mode()
   return string.format(" %s ", M.modes[current_mode]):upper()
 end
 
+-- vim.
+
 function M.update_mode_colors()
   local current_mode = vim.api.nvim_get_mode().mode
   local mode_color = "%#StatusLineAccent#"
@@ -88,14 +90,22 @@ end
 
 function M.lsp()
   local count = {}
+  -- local levels = {
+  --   errors = vim.diagnostic.ERROR, -- ERROR
+  --   warnings = vim.diagnostic.WARN, -- WARN
+  --   info = vim.diagnostic.INFO, -- INFO
+  --   hints = vim.diagnostic.HINT, -- HINT
+  -- }
+
   local levels = {
-    errors = vim.diagnostic.ERROR, -- ERROR
-    warnings = vim.diagnostic.WARN, -- WARN
-    info = vim.diagnostic.INFO, -- INFO
-    hints = vim.diagnostic.HINT, -- HINT
+    errors = "error", -- ERROR
+    warnings = "warn", -- WARN
+    info = "info", -- INFO
+    hints = "hint", -- HINT
   }
 
   for k, level in pairs(levels) do
+    ---@diagnostic disable-next-line: assign-type-mismatch
     count[k] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
   end
 
@@ -218,7 +228,11 @@ vim.api.nvim_set_hl(0, 'StatusLocation', { foreground = '#1d2021', background = 
 vim.api.nvim_set_hl(0, 'StatusPercent', { foreground = '#ebdbb2', background = '#1d2021', bold = false })
 vim.api.nvim_set_hl(0, 'StatusNorm', { foreground = '#FFFFFF', background = 'none', bold = false })
 
-local function getColor(group) return vim.api.nvim_get_hl_by_name(group, true); end
+local function getColor(group)
+  -- local group_id = vim.api.nvim_get_hl_id_by_name(group)
+  -- return vim.api.nvim_get_hl(group_id, {})
+  return vim.api.nvim_get_hl_by_name(group, true);
+end
 
 vim.api.nvim_set_hl(0, 'StatusLineAccent', { foreground = '#000000', background = '#FFFFFF', bold = false })
 vim.api.nvim_set_hl(0, 'StatuslineAccent',

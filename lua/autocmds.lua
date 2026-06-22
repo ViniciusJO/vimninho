@@ -72,7 +72,18 @@ vim.api.nvim_create_autocmd("WinClosed", {
           local win_buf = vim.api.nvim_win_get_buf(win)
           if cfg.relative == "" and vim.bo[win_buf].filetype ~= "fyler" then count = count + 1 end
         end
-        if count == 0 then return end
+
+        local buf_count = 0
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.api.nvim_buf_is_loaded(buf) then
+            if vim.api.nvim_buf_get_name(buf):match("^/") then
+              buf_count = buf_count + 1
+              -- print(buf, vim.api.nvim_buf_get_name(buf))
+            end
+          end
+        end
+
+        if count == 0 or buf_count == 0 then return end
       end
 
       for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -85,6 +96,7 @@ vim.api.nvim_create_autocmd("WinClosed", {
     end)
   end
 });
+
 
 
 -- wrap, linebreak and spellcheck on markdown and text files
