@@ -52,6 +52,8 @@ return {
         },
       }
 
+      dap.configurations.zig = dap.configurations.c;
+
       dap.configurations.lua = {
         {
           type = 'nlua',
