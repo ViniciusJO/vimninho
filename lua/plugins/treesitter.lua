@@ -7,48 +7,57 @@ return {
     vim.keymap.set("n", "<leader>i", vim.treesitter.inspect_tree, { desc = "Inspect TreeSitter tree" })
 
     local treesitter = require("nvim-treesitter")
-    treesitter.setup({})
+    treesitter.setup({ install_dir = vim.fn.stdpath('data') .. '/site', })
 
-    local ensure_installed = {
-      "vim", "vimdoc",
-      "lua", "luadoc",
-      "asm", "nasm",
-      'vhdl', 'systemverilog',
-      "c", "cpp", "zig",
-      "go", "rust",
-      "llvm",
-      "make",
-      "markdown", 'markdown_inline',
-      "html", "css",
-      "javascript", "json",
-      "typescript", "vue", "svelte",
-      "bash", "zsh", "awk",
-      'matlab',
-      "python",
-      "ini", "yaml", "xml", "csv", 'properties', 'proto', 'query', 'regex',
-      "http", 'nginx',
-      "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore",
-      'pem',
-      'tmux',
-      'udev', 'devicetree'
-    }
+    -- vim.print(vim.fn.executable('tree-sitter'))
+    if vim.fn.executable('tree-sitter') == 0 then
+      -- error("", 1)
+      vim.notify(
+        "tree-sitter-cli is not installed. Some features will be disabled.",
+        vim.log.levels.WARN
+      )
+    else
+      local ensure_installed = {
+        "vim", "vimdoc",
+        "lua", "luadoc",
+        "asm", "nasm",
+        'vhdl', 'systemverilog',
+        "c", "cpp", "zig",
+        "go", "rust",
+        "llvm",
+        "make",
+        "markdown", 'markdown_inline',
+        "html", "css",
+        "javascript", "json",
+        "typescript", "vue", "svelte",
+        "bash", "zsh", "awk",
+        'matlab',
+        "python",
+        "ini", "yaml", "xml", "csv", 'properties', 'proto', 'query', 'regex',
+        "http", 'nginx',
+        "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore",
+        'pem',
+        'tmux',
+        'udev', 'devicetree'
+      }
 
-    local config = require("nvim-treesitter.config")
+      local config = require("nvim-treesitter.config")
 
-    local already_installed = config.get_installed()
-    -- vim.print(already_installed)
+      local already_installed = config.get_installed()
+      -- vim.print(already_installed)
 
-    local parsers_to_install = {}
+      local parsers_to_install = {}
 
-    for _, parser in ipairs(ensure_installed) do
-      if not vim.tbl_contains(already_installed, parser) then
-        table.insert(parsers_to_install, parser)
+      for _, parser in ipairs(ensure_installed) do
+        if not vim.tbl_contains(already_installed, parser) then
+          table.insert(parsers_to_install, parser)
+        end
       end
-    end
-    -- vim.print(parsers_to_install, #parsers_to_install)
+      -- vim.print(parsers_to_install, #parsers_to_install)
 
-    if #parsers_to_install > 0 then
-      treesitter.install(parsers_to_install, { force = true, summary = true }):wait(30000000000)
+      if #parsers_to_install > 0 then
+        treesitter.install(parsers_to_install, { force = true, summary = true }):wait(30000000000)
+      end
     end
 
     local group = vim.api.nvim_create_augroup("TreeSitterConfig", { clear = true })

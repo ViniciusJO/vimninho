@@ -3,14 +3,12 @@
 --    - proper lsp
 
 vim.opt.termguicolors = true
-vim.cmd.colorscheme("unokai")
 
 require("utils")
 require("options")
 require("keymaps")
 require("autocmds")
 require("float_terminal")
-require("colorscheme")
 
 vim.keymap.set('n', '<leader>A', vim.utils.print_current_char_code, { desc = 'Code of char under cursor', noremap = true, silent = true })
 
@@ -119,11 +117,8 @@ vim.keymap.hint("<leader>lv", "Split verticaly and...")
 
 vim.keymap.hint("<leader>d", "Debugger")
 
+
 -- vim.keymap.set({'n', 'i'}, '<c-j>', function() vim.cmd("Inspect") end, {})
-
-
-
-
 
 -- (
 --    fenced_code_block
@@ -132,4 +127,7 @@ vim.keymap.hint("<leader>d", "Debugger")
 --    (#set! injection.language "glsl")
 -- )
 
+
+-- Colorscheme persistency
+vim.utils.load_module("$HOME/.cache/nvim/colorscheme.lua", true)
 

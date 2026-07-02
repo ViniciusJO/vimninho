@@ -204,3 +204,18 @@ end
 function vim.utils.intro()
     vim.utils.run_cmd_capture("intro");
 end
+
+
+
+---Load lua modules using its system (unix) path
+---@param path string
+---@param ignore_error ?boolean
+function vim.utils.load_module(path, ignore_error)
+  local resolved_path = vim.fn.expand(path)
+  local mod, _err = loadfile(resolved_path)
+  if _err == nil and mod ~= nil then
+    mod()
+  elseif _err ~= nil and not ignore_error then
+    error(_err)
+  end
+end
