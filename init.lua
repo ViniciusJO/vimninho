@@ -10,8 +10,7 @@ require("keymaps")
 require("autocmds")
 require("float_terminal")
 
-vim.keymap.set('n', '<leader>A', vim.utils.print_current_char_code, { desc = 'Code of char under cursor', noremap = true, silent = true })
-
+-- TODO: fix highlight groups and interaction on change theme background transparency
 local statusline = require("statusline")
 statusline.setup()
 statusline.enable()
@@ -26,7 +25,8 @@ vim.api.nvim_create_user_command('PreprocessC', c_utils.preprocessCFile, { desc 
 vim.keymap.set({ 'n' }, '<leader>lh', c_utils.generate_c_header_only_preprocs, { desc = 'Generate C header guard machinery', noremap = true, silent = true })
 vim.keymap.set({ 'n' }, '<leader>lp', c_utils.preprocessCFile, { desc = 'Preprocess C File', noremap = true, silent = true })
 
-local function set_transparent() -- set UI component to transparent
+-- set UI component to transparent
+local function set_transparent()
   local groups = {
     "Normal",
     "NormalNC",
@@ -54,8 +54,6 @@ vim.keymap.set("n", "<leader>.", function()
     vim.g.transparent = true
   end
 end, { desc = "Toggle background transparency", silent = true, noremap = true })
-
-set_transparent()
 
 
 local plugins = {
@@ -91,6 +89,10 @@ local plugins = {
   require("plugins.lsp"),
 
   require("plugins.fyler"),
+
+  -- Themes
+  { src = vim.pack.gh("nyoom-engineering/oxocarbon.nvim") },
+  { src = vim.pack.gh("artart222/nvim-enfocado") },
 }
 
 vim.pack.packit(plugins)
@@ -130,4 +132,5 @@ vim.keymap.hint("<leader>d", "Debugger")
 
 -- Colorscheme persistency
 vim.utils.load_module("$HOME/.cache/nvim/colorscheme.lua", true)
+set_transparent()
 

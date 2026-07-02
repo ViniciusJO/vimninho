@@ -124,6 +124,10 @@
       "rev": "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6",
       "src": "https://github.com/theHamsta/nvim-dap-virtual-text"
     },
+    "nvim-enfocado": {
+      "rev": "6471b09d24ac235e77ccfab8c5c5cf5b9863ed2e",
+      "src": "https://github.com/artart222/nvim-enfocado"
+    },
     "nvim-lspconfig": {
       "rev": "bfcc0171a43f22afa61d927ffe9fcb6cb85dc99e",
       "src": "https://github.com/neovim/nvim-lspconfig"
@@ -147,6 +151,10 @@
     "one-small-step-for-vimkind": {
       "rev": "1af6ffb9b5229a856e8090fa2f690e0931a5aace",
       "src": "https://github.com/jbyuki/one-small-step-for-vimkind"
+    },
+    "oxocarbon.nvim": {
+      "rev": "cf49e389c22dab56224e43ae16422ddcd5b61b28",
+      "src": "https://github.com/nyoom-engineering/oxocarbon.nvim"
     },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",

@@ -143,9 +143,13 @@ end, makeopt("Toggle quickfix list"))
 
 -- vim.keymap.set("n", "<leader>bn", ":bnext<CR>", makeopt("Next buffer"))
 -- vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", makeopt("Previous buffer"))
+--
+
+vim.keymap.set('n', '<leader>A', vim.utils.print_current_char_code, { desc = 'Code of char under cursor', noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>pa", function() -- show file path
 	local path = vim.fn.expand("%:p")
 	vim.fn.setreg("+", path)
 	print("file:", path)
 end, makeopt("Copy full file path"))
+
