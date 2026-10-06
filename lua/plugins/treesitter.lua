@@ -5,6 +5,7 @@ return {
   build = ":TSUpdate",
   config = function()
     vim.keymap.set("n", "<leader>i", vim.treesitter.inspect_tree, { desc = "Inspect TreeSitter tree" })
+    vim.keymap.set("n", "<leader>I", ":Inspect<CR>", { desc = "Inspect TreeSitter node" })
 
     local treesitter = require("nvim-treesitter")
     treesitter.setup({ install_dir = vim.fn.stdpath('data') .. '/site', })

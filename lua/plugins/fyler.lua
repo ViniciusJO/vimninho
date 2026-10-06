@@ -8,7 +8,7 @@ return {
     fyler.setup({
       extensions = {
         git = { enabled = true, inline = false, },
-        trash = { enabled = true }
+        trash = { enabled = false }
       },
       -- integrations = { icon = "nvim_web_devicons", },
       integrations = { icon = "mini_icons", },

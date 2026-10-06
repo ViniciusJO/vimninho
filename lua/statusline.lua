@@ -31,9 +31,29 @@ function M.mode()
   return string.format(" %s ", M.modes[current_mode]):upper()
 end
 
--- vim.
+-- TODO: verify if colors are compatible with the transparent background
+function M.set_hl()
+  vim.api.nvim_set_hl(0, 'StatusLineAccent', { foreground = '#FF0000', background = '#000000', bold = false })
+
+  local inc = vim.utils.get_hl_info_by_name('IncSearch')
+  vim.api.nvim_set_hl(0, 'StatuslineAccent',
+    { foreground = vim.utils.colors.bw_contrast(inc.bg), background = inc.bg, bold = false })
+
+  local warn = vim.utils.get_hl_by_name('WarningMsg')
+  vim.api.nvim_set_hl(0, 'StatuslineInsertAccent',
+    { foreground = vim.utils.colors.bw_contrast(warn.fg), background = warn.fg, bold = false })
+
+  local subst = vim.utils.get_hl_by_name('Substitute');
+  vim.api.nvim_set_hl(0, 'StatuslineVisualAccent',
+    { foreground = subst.fg, background = subst.bg, bold = false })
+  vim.api.nvim_set_hl(0, 'StatuslineCmdLineAccent',  vim.utils.get_hl_by_name('WildMenu'))
+  vim.api.nvim_set_hl(0, 'StatuslineTerminalAccent', vim.utils.get_hl_by_name('DiffChange'))
+  vim.api.nvim_set_hl(0, 'StatuslineReplaceAccent',  vim.utils.get_hl_by_name('DiffText'))
+end
 
 function M.update_mode_colors()
+  M.set_hl()
+
   local current_mode = vim.api.nvim_get_mode().mode
   local mode_color = "%#StatusLineAccent#"
   if current_mode == "n" then
@@ -165,9 +185,9 @@ function M.get_buf_desc()
   return M.filepath() .. M.filename()
 end
 
-function M.get(_)
+function M.get()
   if vim.bo.filetype:match("fyler") then return "%#StatusLineNC#   Fyler" end
-  return table.concat {
+  local ret = table.concat {
     "%#Statusline#",
     M.update_mode_colors(),
     M.mode(),
@@ -184,6 +204,7 @@ function M.get(_)
     "%#StatusLineExtra#",
     M.lineinfo(),
   }
+  return ret
 end
 
 function M.enable(_)
@@ -209,7 +230,7 @@ end
 
 function M.setup(_)
   vim.health.start("Statusline")
-  vim.health.ok("Statusline ok")
+  M.check()
 end
 
 --statusline
@@ -220,6 +241,7 @@ end
 -- vim.api.nvim_set_hl(0, 'StatusLocation',{ foreground='#1d2021', background='#458588', bold=false })
 -- vim.api.nvim_set_hl(0, 'StatusPercent',{ foreground='#ebdbb2', background='#1d2021', bold=false })
 -- vim.api.nvim_set_hl(0, 'StatusNorm',{ foreground='#FFFFFF', background='none', bold=false })
+
 vim.api.nvim_set_hl(0, 'StatusType', { foreground = '#1d2021', background = '#b16286', bold = false })
 vim.api.nvim_set_hl(0, 'StatusFile', { foreground = '#1d2021', background = '#fabd2f', bold = false })
 vim.api.nvim_set_hl(0, 'StatusModified', { foreground = '#d3869b', background = '#1d2021', bold = false })
@@ -227,22 +249,6 @@ vim.api.nvim_set_hl(0, 'StatusBuffer', { foreground = '#1d2021', background = '#
 vim.api.nvim_set_hl(0, 'StatusLocation', { foreground = '#1d2021', background = '#458588', bold = false })
 vim.api.nvim_set_hl(0, 'StatusPercent', { foreground = '#ebdbb2', background = '#1d2021', bold = false })
 vim.api.nvim_set_hl(0, 'StatusNorm', { foreground = '#FFFFFF', background = 'none', bold = false })
-
-local function getColor(group)
-  -- local group_id = vim.api.nvim_get_hl_id_by_name(group)
-  -- return vim.api.nvim_get_hl(group_id, {})
-  return vim.api.nvim_get_hl_by_name(group, true);
-end
-
-vim.api.nvim_set_hl(0, 'StatusLineAccent', { foreground = '#000000', background = '#FFFFFF', bold = false })
-vim.api.nvim_set_hl(0, 'StatuslineAccent',
-  { foreground = '#000000', background = getColor('IncSearch').background, bold = false })
-vim.api.nvim_set_hl(0, 'StatuslineInsertAccent',
-  { foreground = '#000000', background = getColor('WarningMsg').foreground, bold = false })
-vim.api.nvim_set_hl(0, 'StatuslineVisualAccent', getColor('Substitute'))
-vim.api.nvim_set_hl(0, 'StatuslineCmdLineAccent', getColor('WildMenu'))
-vim.api.nvim_set_hl(0, 'StatuslineTerminalAccent', getColor('DiffChange'))
-vim.api.nvim_set_hl(0, 'StatuslineReplaceAccent', getColor('DiffText'))
 
 -- vim.api.nvim_set_hl(0, 'StatusLineAccent',{ foreground='#000000', background='#FFFFFF', bold=false })
 -- vim.api.nvim_set_hl(0, 'StatuslineAccent',{ foreground='#000000', background='#33bb77', bold=false })

@@ -29,7 +29,7 @@ vim.keymap.set({ 'n' }, '<leader>lp', c_utils.preprocessCFile, { desc = 'Preproc
 local function set_transparent()
   local groups = {
     "Normal",
-    "NormalNC",
+    -- "NormalNC",
     "EndOfBuffer",
     "NormalFloat",
     "FloatBorder",
@@ -37,13 +37,20 @@ local function set_transparent()
     "StatusLine",
     "StatusLineNC",
     "TabLine",
-    -- "TabLineFill",
-    -- "TabLineSel",
+    "TabLineFill",
+    "TabLineSel",
     "ColorColumn",
   }
-  for _, g in ipairs(groups) do vim.api.nvim_set_hl(0, g, { bg = "none" }) end
+  for _, g in ipairs(groups) do
+    vim.api.nvim_set_hl(0, g, { bg = "none" })
+  end
+
   vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", fg = "#767676" })
+  local accent = vim.utils.get_hl_info_by_name('IncSearch')
+  vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent.fg, fg = "#000000" })
 end
+
+vim.keymap.set("n", "<C-ç>", function() vim.print(Statusline.get()) end, {})
 
 vim.keymap.set("n", "<leader>.", function()
   if vim.g.transparent then
@@ -130,7 +137,11 @@ vim.keymap.hint("<leader>d", "Debugger")
 -- )
 
 
+require("dynamic_colors").setup({
+    path = "~/.cache/juiced.color",
+    transparent = true,
+})
 -- Colorscheme persistency
 vim.utils.load_module("$HOME/.cache/nvim/colorscheme.lua", true)
-set_transparent()
+-- set_transparent()
 

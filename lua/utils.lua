@@ -93,7 +93,7 @@ function vim.utils.jump_to_buffer_in_window(bufnr_to_find)
   return false -- Buffer not found in any window
 end
 
---- Exec function in other buffer
+---Exec function in other buffer
 ---@param bufnr integer
 ---@param fn function
 function vim.utils.do_in_other_buffer(bufnr, fn, report)
@@ -106,6 +106,36 @@ function vim.utils.do_in_other_buffer(bufnr, fn, report)
     error("Buffer " .. bufnr .. " not found");
   end
 end
+
+
+---Gets all or specific highlight groups in a namespace by name.
+---@param name string hl group name
+---@return vim.api.keyset.get_hl_info hl_info hl info
+function vim.utils.get_hl_info_by_name(name)
+  return vim.api.nvim_get_hl(0, {
+      name = name,
+      link = false,
+  })
+end
+
+---Gets all or specific highlight groups in a namespace by name.
+---@param name string hl group name
+---@return vim.api.keyset.highlight hl hl info
+function vim.utils.get_hl_by_name(name)
+  local hl = vim.utils.get_hl_info_by_name(name)
+  return {
+    blend      = hl.blend,
+    bg         = hl.bg,
+    bg_indexed = hl.bg_indexed,
+    cterm      = hl.cterm,
+    default    = hl.default,
+    fg         = hl.fg,
+    fg_indexed = hl.fg_indexed,
+    link       = hl.link,
+    sp         = hl.sp,
+  }
+end
+
 
 
 ---Hints a intermediary keymap prefix
@@ -218,4 +248,80 @@ function vim.utils.load_module(path, ignore_error)
   elseif _err ~= nil and not ignore_error then
     error(_err)
   end
+end
+
+vim.utils.colors = {}
+
+---Returns black or white, either one contrast more with `hex`
+---@param color string|integer color
+---@return string bw '"#000000" or "#FFFFFF"'
+function vim.utils.colors.bw_contrast(color)
+    local r, g, b
+
+    if type(color) == "number" then
+        -- Neovim's 0xRRGGBB integer representation.
+        r = (color >> 16) & 0xff
+        g = (color >> 8) & 0xff
+        b = color & 0xff
+
+    elseif type(color) == "string" then
+        local hex = color:gsub("#", "")
+
+        -- Expand #RGB / #RGBA.
+        if #hex == 3 or #hex == 4 then
+            local expanded = {}
+
+            for i = 1, #hex do
+                local c = hex:sub(i, i)
+                expanded[#expanded + 1] = c .. c
+            end
+
+            hex = table.concat(expanded)
+        end
+
+        -- Ignore alpha from #RRGGBBAA.
+        if #hex == 8 then
+            hex = hex:sub(1, 6)
+        end
+
+        assert(
+            #hex == 6 and hex:match("^%x%x%x%x%x%x$"),
+            "invalid color: expected #RGB, #RGBA, #RRGGBB or #RRGGBBAA"
+        )
+
+        r = tonumber(hex:sub(1, 2), 16)
+        g = tonumber(hex:sub(3, 4), 16)
+        b = tonumber(hex:sub(5, 6), 16)
+
+    else
+        error("color must be a number or hex string")
+    end
+
+    r = r / 255
+    g = g / 255
+    b = b / 255
+
+    local function linearize(c)
+        if c <= 0.04045 then
+            return c / 12.92
+        end
+
+        return ((c + 0.055) / 1.055) ^ 2.4
+    end
+
+    r = linearize(r)
+    g = linearize(g)
+    b = linearize(b)
+
+    local luminance =
+        0.2126 * r +
+        0.7152 * g +
+        0.0722 * b
+
+    local black_contrast = (luminance + 0.05) / 0.05
+    local white_contrast = 1.05 / (luminance + 0.05)
+
+    return white_contrast > black_contrast
+        and "#ffffff"
+        or "#000000"
 end

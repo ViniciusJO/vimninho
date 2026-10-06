@@ -17,3 +17,7 @@ System packages:
 
 <!-- For LuaSnip: -->
 <!-- lua-jsregexp -->
+
+## TODO:
+
+- [ ] document dynamic color format (see [color_juicer](https://github.com/ViniciusJO/color_juicer.zig))

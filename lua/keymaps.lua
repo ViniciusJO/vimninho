@@ -57,9 +57,13 @@ vim.keymap.set({ 'i', 't' }, '<C-j>', '<Down>', { noremap = true, silent = true 
 vim.keymap.set({ 'i', 't' }, '<C-h>', '<Left>', { noremap = true, silent = true })
 vim.keymap.set({ 'i', 't' }, '<C-l>', '<Right>', { noremap = true, silent = true })
 
+-- Action and resselect
 vim.keymap.set("v", "<", "<gv", makeopt("Indent left and reselect"))
 vim.keymap.set("v", ">", ">gv", makeopt("Indent right and reselect"))
+vim.keymap.set("v", "<C-a>", "<C-a>gv", makeopt("Increment and reselect"))
+vim.keymap.set("v", "<C-x>", "<C-x>gv", makeopt("Decrement and reselect"))
 
+-- Move line
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", makeopt("Move line down"))
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", makeopt("Move line up"))
 vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", makeopt("Move selection down"))
@@ -118,9 +122,13 @@ vim.keymap.set('n', 'Q', '@q', makeopt("Plays macro at q"))
 vim.keymap.set('x', 'Q', ':norm @q<CR>', makeopt("Plays macro at q on each lines selected"))
 
 -- Terminal
-vim.keymap.set('n', '<leader>x', '<cmd>split | term<CR>i',
+-- vim.keymap.set('n', '<leader>x', '<cmd>split | term<CR>i',
+--   { noremap = true, silent = true, desc = 'Toggle split terminal' })
+-- vim.keymap.set('n', '<leader>X', '<cmd>vsplit | term<CR>i',
+--   { noremap = true, silent = true, desc = 'Toggle split terminal [vertcal]' })
+vim.keymap.set('n', '<C-w>x', '<cmd>split | term<CR>i',
   { noremap = true, silent = true, desc = 'Toggle split terminal' })
-vim.keymap.set('n', '<leader>X', '<cmd>vsplit | term<CR>i',
+vim.keymap.set('n', '<C-w>X', '<cmd>vsplit | term<CR>i',
   { noremap = true, silent = true, desc = 'Toggle split terminal [vertcal]' })
 vim.keymap.set('t', '<esc><esc>', '<C-\\><C-n>', makeopt("Unfocus terminal"))
 vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>', makeopt("Navigate"))
