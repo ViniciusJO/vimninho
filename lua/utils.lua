@@ -260,9 +260,12 @@ function vim.utils.colors.bw_contrast(color)
 
     if type(color) == "number" then
         -- Neovim's 0xRRGGBB integer representation.
-        r = (color >> 16) & 0xff
-        g = (color >> 8) & 0xff
-        b = color & 0xff
+        r = bit.band(bit.rshift(color, 16), 0xff)
+        g = bit.band(bit.rshift(color, 8), 0xff)
+        b = bit.band(color, 0xff)
+        -- r = 0
+        -- g = 0
+        -- b = 0
 
     elseif type(color) == "string" then
         local hex = color:gsub("#", "")

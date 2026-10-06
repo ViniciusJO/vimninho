@@ -167,6 +167,21 @@ function M.setup(opts)
     end, { desc = "Reread the color file and reapply the dynamic colorscheme" })
 end
 
+--- Flip the `transparent` option and return the new state.
+---
+--- Reapplies right away when this colorscheme is active; otherwise the new
+--- state is used the next time it loads.
+---@return boolean transparent
+function M.toggle_transparency()
+    options.transparent = not options.transparent
+
+    if vim.g.colors_name == NAME then
+        M.reload()
+    end
+
+    return options.transparent
+end
+
 --- Read the color file and apply the whole colorscheme.
 ---
 --- The palette is loaded before anything is cleared, so a broken color file

@@ -50,17 +50,7 @@ local function set_transparent()
   vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent.fg, fg = "#000000" })
 end
 
-vim.keymap.set("n", "<C-ç>", function() vim.print(Statusline.get()) end, {})
-
-vim.keymap.set("n", "<leader>.", function()
-  if vim.g.transparent then
-    vim.cmd.colorscheme(vim.g.colors_name)
-    vim.g.transparent = false
-  else
-    set_transparent()
-    vim.g.transparent = true
-  end
-end, { desc = "Toggle background transparency", silent = true, noremap = true })
+-- vim.keymap.set("n", "<C-ç>", function() vim.print(Statusline.get()) end, {})
 
 
 local plugins = {
@@ -136,11 +126,33 @@ vim.keymap.hint("<leader>d", "Debugger")
 --    (#set! injection.language "glsl")
 -- )
 
-
-require("dynamic_colors").setup({
+local dynamic_colors = require("dynamic_colors")
+dynamic_colors.setup({
     path = "~/.cache/juiced.color",
     transparent = true,
 })
+
+vim.keymap.set("n", "<leader>.", function()
+    local toggled, result = pcall(dynamic_colors.toggle_transparency)
+    if not toggled then
+        vim.notify(tostring(result), vim.log.levels.ERROR)
+        return
+    end
+    vim.notify("Transparency " .. (result and "on" or "off"))
+end, { desc = "Toggle dynamic_colors transparency" })
+
+
+-- vim.keymap.set("n", "<leader>.", function()
+--   if vim.g.transparent then
+--     vim.cmd.colorscheme(vim.g.colors_name)
+--     vim.g.transparent = false
+--   else
+--     set_transparent()
+--     vim.g.transparent = true
+--   end
+-- end, { desc = "Toggle background transparency", silent = true, noremap = true })
+
+
 -- Colorscheme persistency
 vim.utils.load_module("$HOME/.cache/nvim/colorscheme.lua", true)
 -- set_transparent()
