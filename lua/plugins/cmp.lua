@@ -10,6 +10,38 @@ return {
   vim.pack.gh("rafamadriz/friendly-snippets"),
   vim.pack.gh("L3MON4D3/LuaSnip"),
   {
+    src = vim.pack.gh("tamago324/cmp-zsh"),
+    config = function()
+      local filetypes = {
+        "deoledit",
+        "zsh",
+        "bash",
+        "make",
+        "sh",
+      }
+      require("cmp_zsh").setup({
+        zshrc = true, -- Source the zshrc (adding all custom completions). default: false
+        filetypes = filetypes -- Filetypes to enable cmp_zsh source. default: {"*"}
+      });
+
+      require("cmp").setup.filetype(filetypes, {
+        sources = {
+          { name = "zsh" },
+          { name = "path" },
+          { name = "buffer" },
+        }
+      })
+
+      require("cmp").setup.cmdline('!', {
+        sources = {
+          { name = "zsh" },
+          { name = "path" },
+          { name = "buffer" },
+        }
+      })
+    end
+  },
+  {
     src = vim.pack.gh("catgoose/nvim-colorizer.lua.git"),
     config = function()
       local cmp = require('cmp')

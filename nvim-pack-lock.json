@@ -36,6 +36,10 @@
       "rev": "c642487086dbd9a93160e1679a1327be111cbc25",
       "src": "https://github.com/hrsh7th/cmp-path"
     },
+    "cmp-zsh": {
+      "rev": "c24db8e58fac9006ec23d93f236749288d00dec9",
+      "src": "https://github.com/tamago324/cmp-zsh"
+    },
     "cmp_luasnip": {
       "rev": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90",
       "src": "https://github.com/saadparwaiz1/cmp_luasnip"

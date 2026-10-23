@@ -4,7 +4,15 @@ return {
   config = function()
     local fzf_lua = require("fzf-lua")
     local fzf_actions = require("fzf-lua.actions")
-    fzf_lua.setup({})
+
+    fzf_lua.setup({
+      keymap = {
+        fzf = {
+          ["ctrl-q"] = "select-all+accept",
+        },
+      },
+    })
+
     vim.keymap.set("n", "<leader>fo", fzf_lua.oldfiles, { desc = "Files" })
     vim.keymap.set("n", "<leader>ff", fzf_lua.files, { desc = "Files" })
     vim.keymap.set("n", "<leader>fl", fzf_lua.live_grep, { desc = "Diagnostics Workspace" })
