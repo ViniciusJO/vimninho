@@ -160,6 +160,10 @@
       "rev": "cf49e389c22dab56224e43ae16422ddcd5b61b28",
       "src": "https://github.com/nyoom-engineering/oxocarbon.nvim"
     },
+    "pair.nvim": {
+      "rev": "5d0d7fe",
+      "src": "https://github.com/sampsn/pair.nvim"
+    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"

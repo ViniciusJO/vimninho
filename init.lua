@@ -10,6 +10,8 @@ require("keymaps")
 require("autocmds")
 require("float_terminal")
 
+vim.keymap.set({ 'n' }, '<leader>ç', ':r!~/.scripts/today.sh<cr>', { desc = 'today', noremap = true, silent = true })
+
 -- TODO: fix highlight groups and interaction on change theme background transparency
 local statusline = require("statusline")
 statusline.setup()
@@ -26,29 +28,29 @@ vim.keymap.set({ 'n' }, '<leader>lh', c_utils.generate_c_header_only_preprocs, {
 vim.keymap.set({ 'n' }, '<leader>lp', c_utils.preprocessCFile, { desc = 'Preprocess C File', noremap = true, silent = true })
 
 -- set UI component to transparent
-local function set_transparent()
-  local groups = {
-    "Normal",
-    -- "NormalNC",
-    "EndOfBuffer",
-    "NormalFloat",
-    "FloatBorder",
-    "SignColumn",
-    "StatusLine",
-    "StatusLineNC",
-    "TabLine",
-    "TabLineFill",
-    "TabLineSel",
-    "ColorColumn",
-  }
-  for _, g in ipairs(groups) do
-    vim.api.nvim_set_hl(0, g, { bg = "none" })
-  end
-
-  vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", fg = "#767676" })
-  local accent = vim.utils.get_hl_info_by_name('IncSearch')
-  vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent.fg, fg = "#000000" })
-end
+-- local function set_transparent()
+--   local groups = {
+--     "Normal",
+--     -- "NormalNC",
+--     "EndOfBuffer",
+--     "NormalFloat",
+--     "FloatBorder",
+--     "SignColumn",
+--     "StatusLine",
+--     "StatusLineNC",
+--     "TabLine",
+--     "TabLineFill",
+--     "TabLineSel",
+--     "ColorColumn",
+--   }
+--   for _, g in ipairs(groups) do
+--     vim.api.nvim_set_hl(0, g, { bg = "none" })
+--   end
+--
+--   vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", fg = "#767676" })
+--   local accent = vim.utils.get_hl_info_by_name('IncSearch')
+--   vim.api.nvim_set_hl(0, "TabLineSel", { bg = accent.fg, fg = "#000000" })
+-- end
 
 -- vim.keymap.set("n", "<C-ç>", function() vim.print(Statusline.get()) end, {})
 
@@ -86,6 +88,8 @@ local plugins = {
   require("plugins.lsp"),
 
   require("plugins.fyler"),
+
+  require("plugins.pair"),
 
   -- Themes
   { src = vim.pack.gh("nyoom-engineering/oxocarbon.nvim") },
