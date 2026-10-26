@@ -10,7 +10,9 @@ require("keymaps")
 require("autocmds")
 require("float_terminal")
 
-vim.keymap.set({ 'n' }, '<leader>ç', ':r!~/.scripts/today.sh<cr>', { desc = 'today', noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<leader>ç', ':r!~/.scripts/today.sh nvim<cr>', { desc = 'Today', noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<leader>Ç', ':r!~/.scripts/today.sh nvim_full<cr>', { desc = 'Today', noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<leader>N',  ':e ~/.notes.md<cr>', { desc = 'Open notes', noremap = true, silent = true })
 
 -- TODO: fix highlight groups and interaction on change theme background transparency
 local statusline = require("statusline")
